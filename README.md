@@ -216,17 +216,6 @@ npm run build
 }
 ```
 
-## 📱 Screenshots & Demo
-
-### Dashboard View
-![Dashboard](https://via.placeholder.com/800x400/667eea/ffffff?text=Interactive+Dashboard+with+Charts)
-
-*Interactive dashboard featuring expense totals, donut charts, and recent transactions*
-
-### Expense Management
-![Expense List](https://via.placeholder.com/800x400/764ba2/ffffff?text=Expense+List+with+Filtering)
-
-*Comprehensive expense list with advanced filtering and search capabilities*
 
 ## 🔮 Future Enhancements
 
@@ -241,7 +230,7 @@ npm run build
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/Eng-Eyad77/SpendWise/issues).
+Contributions, issues, and feature requests are welcome!.
 
 ### Development Workflow
 1. Fork the repository
@@ -282,7 +271,7 @@ All AI-generated code was manually reviewed, tested, and adapted to meet project
 
 ## 📄 License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ---
 
