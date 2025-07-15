@@ -1,0 +1,7 @@
+<div class="chart-container">
+  <canvas #chartCanvas></canvas>
+  <div *ngIf="expenses.length === 0" class="no-data-message">
+    <p>No expenses to display</p>
+    <p class="hint">Add some expenses to see the distribution chart</p>
+  </div>
+</div>

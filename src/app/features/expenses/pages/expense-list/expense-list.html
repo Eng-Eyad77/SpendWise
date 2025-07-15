@@ -1,0 +1,149 @@
+<div class="expense-list-container">
+  <!-- Header Section -->
+  <div class="list-header">
+    <h1>Expense List</h1>
+    <div class="header-stats">
+      <div class="stat-item">
+        <span class="stat-label">Total Expenses:</span>
+        <span class="stat-value">{{ totalAmount$ | async | currency }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Count:</span>
+        <span class="stat-value">{{ expenseCount$ | async }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Section -->
+  <div class="filter-section card">
+    <h2>Filters</h2>
+    <form [formGroup]="filterForm" class="filter-form">
+      <div class="filter-row">
+        <!-- Search Text -->
+        <div class="form-group">
+          <label for="searchText">Search</label>
+          <input
+            id="searchText"
+            type="text"
+            formControlName="searchText"
+            placeholder="Search by note or category..."
+          />
+        </div>
+
+        <!-- Category Filter -->
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" formControlName="category">
+            <option value="">All Categories</option>
+            <option *ngFor="let category of categories" [value]="category">
+              {{ category }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <!-- Start Date -->
+        <div class="form-group">
+          <label for="startDate">From Date</label>
+          <input
+            id="startDate"
+            type="date"
+            formControlName="startDate"
+          />
+        </div>
+
+        <!-- End Date -->
+        <div class="form-group">
+          <label for="endDate">To Date</label>
+          <input
+            id="endDate"
+            type="date"
+            formControlName="endDate"
+          />
+        </div>
+
+        <!-- Clear Filters Button -->
+        <div class="form-group">
+          <label>&nbsp;</label>
+          <button type="button" class="btn btn-secondary" (click)="clearFilters()">
+            Clear Filters
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Expenses List -->
+  <div class="expenses-container">
+    <div *ngIf="filteredExpenses$ | async as expenses; else noExpenses">
+      <div *ngIf="expenses.length > 0; else noFilteredExpenses" class="expense-grid">
+        <div
+          *ngFor="let expense of expenses; trackBy: trackByExpenseId"
+          class="expense-card"
+        >
+          <div class="expense-header">
+            <div 
+              class="category-badge"
+              [style.background-color]="getCategoryColor(expense.category)"
+            >
+              {{ expense.category }}
+            </div>
+            <div class="expense-amount">{{ expense.amount | currency }}</div>
+          </div>
+          
+          <div class="expense-details">
+            <div class="expense-date">
+              <span class="date-icon">📅</span>
+              {{ formatDate(expense.date) }}
+            </div>
+            
+            <div *ngIf="expense.note" class="expense-note">
+              <span class="note-icon">📝</span>
+              {{ expense.note }}
+            </div>
+          </div>
+
+          <div class="expense-actions">
+            <button 
+              class="btn btn-danger btn-sm"
+              (click)="onDeleteExpense(expense.id)"
+              title="Delete expense"
+            >
+              🗑️ Delete
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- No filtered expenses -->
+      <ng-template #noFilteredExpenses>
+        <div class="empty-state">
+          <div class="empty-icon">🔍</div>
+          <h3>No expenses match your filters</h3>
+          <p>Try adjusting your search criteria or clear the filters to see all expenses.</p>
+          <button class="btn btn-primary" (click)="clearFilters()">
+            Clear Filters
+          </button>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- No expenses at all -->
+    <ng-template #noExpenses>
+      <div class="empty-state">
+        <div class="empty-icon">💰</div>
+        <h3>No expenses yet</h3>
+        <p>Start tracking your spending by adding your first expense.</p>
+        <a routerLink="/expenses/add" class="btn btn-primary">
+          Add Your First Expense
+        </a>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Floating Add Button -->
+  <a routerLink="/expenses/add" class="fab" title="Add new expense">
+    ➕
+  </a>
+</div>

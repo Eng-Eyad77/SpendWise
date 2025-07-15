@@ -1,0 +1,106 @@
+<div class="add-expense-container">
+  <div class="form-header">
+    <h1>Add New Expense</h1>
+    <p>Track your spending by adding a new expense</p>
+  </div>
+
+  <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="expense-form">
+    
+    <!-- Amount Field -->
+    <div class="form-group">
+      <label for="amount">Amount *</label>
+      <div class="input-wrapper">
+        <span class="currency-symbol">$</span>
+        <input
+          id="amount"
+          type="number"
+          formControlName="amount"
+          placeholder="0.00"
+          step="0.01"
+          min="0"
+          [class.error]="isFieldInvalid('amount')"
+        />
+      </div>
+      <div class="error-message" *ngIf="isFieldInvalid('amount')">
+        {{ getFieldError('amount') }}
+      </div>
+    </div>
+
+    <!-- Category Field -->
+    <div class="form-group">
+      <label for="category">Category *</label>
+      <select
+        id="category"
+        formControlName="category"
+        [class.error]="isFieldInvalid('category')"
+      >
+        <option value="">Select a category</option>
+        <option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </option>
+      </select>
+      <div class="error-message" *ngIf="isFieldInvalid('category')">
+        {{ getFieldError('category') }}
+      </div>
+    </div>
+
+    <!-- Date Field -->
+    <div class="form-group">
+      <label for="date">Date *</label>
+      <input
+        id="date"
+        type="date"
+        formControlName="date"
+        [class.error]="isFieldInvalid('date')"
+      />
+      <div class="error-message" *ngIf="isFieldInvalid('date')">
+        {{ getFieldError('date') }}
+      </div>
+    </div>
+
+    <!-- Note Field -->
+    <div class="form-group">
+      <label for="note">Note (Optional)</label>
+      <textarea
+        id="note"
+        formControlName="note"
+        placeholder="Add any additional details about this expense..."
+        rows="3"
+        [class.error]="isFieldInvalid('note')"
+      ></textarea>
+      <div class="character-count">
+        {{ expenseForm.get('note')?.value?.length || 0 }}/500
+      </div>
+      <div class="error-message" *ngIf="isFieldInvalid('note')">
+        {{ getFieldError('note') }}
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="onCancel()"
+        [disabled]="isSubmitting"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="expenseForm.invalid || isSubmitting"
+      >
+        <span *ngIf="isSubmitting" class="loading-spinner"></span>
+        {{ isSubmitting ? 'Adding...' : 'Add Expense' }}
+      </button>
+    </div>
+  </form>
+
+  <!-- Form Summary (for debugging in development) -->
+  <div class="form-debug" *ngIf="false">
+    <h3>Form Status:</h3>
+    <p>Valid: {{ expenseForm.valid }}</p>
+    <p>Value: {{ expenseForm.value | json }}</p>
+  </div>
+</div>

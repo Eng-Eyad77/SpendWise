@@ -1,0 +1,17 @@
+<div class="expense-item">
+  <div class="expense-info">
+    <div class="expense-main">
+      <span 
+        class="category-badge"
+        [style.background-color]="getCategoryColor(expense.category)"
+      >
+        {{ expense.category }}
+      </span>
+      <span class="expense-amount">{{ expense.amount | currency }}</span>
+    </div>
+    <div class="expense-meta">
+      <span class="expense-date">{{ formatDate(expense.date) }}</span>
+      <span *ngIf="expense.note" class="expense-note">{{ expense.note }}</span>
+    </div>
+  </div>
+</div>
